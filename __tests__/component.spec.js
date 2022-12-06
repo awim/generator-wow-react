@@ -14,10 +14,10 @@ describe("generator-wow-react:component", () => {
   it("creates files", () => {
     assert.file([
       "Awesome.tsx",
-      "awesome.helper.ts",
-      "awesome.scss",
-      "__story__/awesome.story.tsx",
-      "__story__/awesome.story.mdx"
+      "AwesomeHelper.ts",
+      "Awesome.scss",
+      "story/Awesome.story.tsx",
+      "story/Awesome.story.mdx"
     ]);
   });
 });

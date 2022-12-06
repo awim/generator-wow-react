@@ -27,6 +27,13 @@ module.exports = class extends Generator {
       description: "Set your component's type"
     });
 
+    this.option("storybook", {
+      type: Boolean,
+      default: true,
+      description:
+        "Add a 'story' directory in the component folder with some boilerplate for @storybook/react"
+    });
+
     this.option("test", {
       type: Boolean,
       default: true,
@@ -45,13 +52,17 @@ module.exports = class extends Generator {
     };
 
     this.generateDestination = function() {
-      const { path, name } = this.options;
-      if (path === "") return name;
-      return path + "/" + name;
+      const { path, name, type } = this.options;
+      if (path === "" && type === "") return name;
+      if (path !== "" && type === "") return path + "/" + name;
+      if (path === "" && type !== "") return path + "/" + name;
+      return path + "/" + type + "/" + name;
     };
 
     this.name = this.options.name;
     this.type = this.options.type;
+    this.project = this.options.project;
+    this.storybook = this.options.storybook;
     this.test = this.options.test;
     this.className = depascalize(this.options.name, "-");
   }
@@ -82,29 +93,33 @@ module.exports = class extends Generator {
     // Write component helper file
     this.fs.copyTpl(
       this.templatePath("component.helper.ts"),
-      this.destinationPath(this.className + ".helper.ts"),
+      this.destinationPath(this.name + "Helper.ts"),
       {
         name: this.name
       }
     );
 
     // Write story file
-    this.fs.copyTpl(
-      this.templatePath("component.story.tsx"),
-      this.destinationPath("__story__/", this.name + ".story.tsx"),
-      {
-        name: this.name
-      }
-    );
+    if (this.storybook) {
+      this.fs.copyTpl(
+        this.templatePath("component.story.tsx"),
+        this.destinationPath("story/", this.name + ".story.tsx"),
+        {
+          name: this.name,
+          project: this.project
+        }
+      );
 
-    // Write story docs file
-    this.fs.copyTpl(
-      this.templatePath("component.story.mdx"),
-      this.destinationPath("__story__/", this.name + ".story.mdx"),
-      {
-        name: this.name
-      }
-    );
+      // Write story docs file
+      this.fs.copyTpl(
+        this.templatePath("component.story.mdx"),
+        this.destinationPath("story/", this.name + ".story.mdx"),
+        {
+          name: this.name,
+          project: this.project
+        }
+      );
+    }
 
     // If test flag, write test files
     if (this.test) {

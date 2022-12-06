@@ -1,28 +1,28 @@
 import React from 'react';
+import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import {<%= name %>} from '../<%= name %>';
+import {<%= name %>, <%= name %>Props} from '../<%= name %>';
 
 
-export default {
-  title: 'WowComponent/<%= name %>',
+const <%= name %>Story = {
+  title: '<%= project %>/<%= name %>',
   component: <%= name %>,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {  },
 };
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template = ({ ...props }) => <<%= name %>  />;
+const Template: ComponentStory<typeof <%= name %>> = ({label}: <%= name %>Props ) => <<%= name %> label={label} />;
 
 export const Primary = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Primary.args = {
-  prop: 'Prop Value Primary',
+  label: 'Primary',
 };
-
 
 export const Alternative = Template.bind({});
 Alternative.args = {
-    prop: 'Prop Value Alternative',
+  label: 'Alternative',
 };
 
-
+export default <%= name %>Story;

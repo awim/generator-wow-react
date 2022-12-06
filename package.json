@@ -32,7 +32,12 @@
     "mocha": "^10.1.0",
     "prettier": "^1.19.1",
     "yeoman-assert": "^3.1.1",
-    "yeoman-test": "^1.7.0"
+    "yeoman-test": "^1.7.0",
+    "yeoman-generator": "^3.1.1",
+    "yo": "^4.3.1",
+    "yosay": "^2.0.2",
+    "react": "^18.2.0",
+    "sass": "^1.56.1"
   },
   "engines": {
     "npm": ">= 4.0.0"
@@ -51,15 +56,8 @@
   },
   "dependencies": {
     "chalk": "^2.1.0",
-    "ejs": "^3.1.8",
-    "generator-generator": "^5.1.0",
     "mkdirp": "^1.0.4",
-    "react": "^18.2.0",
-    "sass": "^1.56.1",
-    "xcase": "^2.0.1",
-    "yeoman-generator": "^3.1.1",
-    "yo": "^4.3.1",
-    "yosay": "^2.0.2"
+    "xcase": "^2.0.1"
   },
   "jest": {
     "testEnvironment": "node"
