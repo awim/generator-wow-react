@@ -1,0 +1,98 @@
+{
+  "name": "generator-wow-react",
+  "version": "1.0.0",
+  "description": "yeoman generator nextjs project & react tsx components, inspired by https://github.com/TonyDotDev/generator-react-tsx-component",
+  "homepage": "https://github.com/awim/generator-wow-react#readme",
+  "author": "awim",
+  "files": [
+    "project",
+    "component",
+    "feature"
+  ],
+  "main": "index.js",
+  "keywords": [
+    "yeoman-generator",
+    "scaffolding",
+    "react",
+    "tsx",
+    "builder",
+    "component",
+    "templates",
+    "yeoman-generator"
+  ],
+  "devDependencies": {
+    "@types/react": "^18.0.26",
+    "coveralls": "^3.0.7",
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.6.0",
+    "eslint-config-xo": "^0.27.2",
+    "eslint-plugin-prettier": "^3.1.1",
+    "husky": "^3.0.9",
+    "lint-staged": "^9.4.3",
+    "mocha": "^10.1.0",
+    "prettier": "^1.19.1",
+    "yeoman-assert": "^3.1.1",
+    "yeoman-test": "^1.7.0"
+  },
+  "engines": {
+    "npm": ">= 4.0.0"
+  },
+  "scripts": {
+    "test": "mocha __tests__/*",
+    "pretest": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/awim/generator-wow-react.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/awim/generator-wow-react/issues"
+  },
+  "dependencies": {
+    "chalk": "^2.1.0",
+    "ejs": "^3.1.8",
+    "generator-generator": "^5.1.0",
+    "mkdirp": "^1.0.4",
+    "react": "^18.2.0",
+    "sass": "^1.56.1",
+    "xcase": "^2.0.1",
+    "yeoman-generator": "^3.1.1",
+    "yo": "^4.3.1",
+    "yosay": "^2.0.2"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "lint-staged": {
+    "*.+(js|ts|jsx|tsx)": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.json": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "eslintConfig": {
+    "extends": [
+      "xo",
+      "prettier"
+    ],
+    "env": {
+      "jest": true,
+      "node": true
+    },
+    "rules": {
+      "prettier/prettier": "error"
+    },
+    "plugins": [
+      "prettier"
+    ]
+  }
+}

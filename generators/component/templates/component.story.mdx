@@ -1,0 +1,24 @@
+<!-- <%= name %>.story.mdx -->
+
+import { Canvas, Meta, Story } from '@storybook/addon-docs';
+
+import { <%= name %> } from '../<%= name %>';
+
+<Meta title="WowComponent/<%= name %>" component={<%= name %>} />
+
+
+export const Template = (args) => <<%= name %> {...args } />
+
+# <%= name %>
+
+This is how to use `<%= name %>` component:
+
+<Canvas>
+  <Story 
+    name="unique-name-component"
+    args={{
+      label: 'Awesome'
+    }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
