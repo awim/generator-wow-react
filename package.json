@@ -57,6 +57,7 @@
   "dependencies": {
     "chalk": "^2.1.0",
     "mkdirp": "^1.0.4",
+    "pluralize": "^8.0.0",
     "xcase": "^2.0.1"
   },
   "jest": {

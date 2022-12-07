@@ -3,8 +3,16 @@
 const Generator = require("yeoman-generator");
 const yosay = require("yosay");
 const mkdirp = require("mkdirp");
+const { depascalize, pascalize, camelize } = require("xcase");
+const { singular } = require("pluralize");
 
 module.exports = class extends Generator {
+  _generateDestination() {
+    const { name, path } = this.options;
+    if (path === "") return name;
+    return `${path}/${name}`;
+  }
+
   constructor(args, opts) {
     super(args, opts);
     this.log("Creating feature...");
@@ -18,7 +26,7 @@ module.exports = class extends Generator {
 
     this.option("folders", {
       type: String,
-      default: "services, components, hooks, contexts, utils, __tests__",
+      default: "services, components, hooks, types, utils, __tests__",
       description: "List folders to be generated in the feature directory"
     });
 
@@ -37,16 +45,23 @@ module.exports = class extends Generator {
     this.name = this.options.name;
     this.path = this.options.path;
     this.folders = this.options.folders;
-    this.generateDestination = function() {
-      const { name, path } = this.options;
-      if (path === "") return name;
-      return `${path}/${name}`;
-    };
+  }
+
+  initializing() {
+    this.log(
+      `generate ${
+        this.options.name
+      } on ${this._generateDestination()}/components`
+    );
+    this.composeWith("wow-react:component", {
+      arguments: [this.options.name],
+      path: "components"
+    });
   }
 
   writing() {
     // Create feature directory
-    this.destinationRoot(this.generateDestination());
+    this.destinationRoot(this._generateDestination());
 
     // Write feature export file
     this.fs.copyTpl(
@@ -55,8 +70,48 @@ module.exports = class extends Generator {
     );
 
     // Generate default feature sub-directories
-    this.folders.split(",").forEach(folder => {
-      mkdirp.sync(`${folder.trim()}`);
+    this.folders.split(",").forEach(dir => {
+      const folder = dir.trim();
+      const sourceCopy = folder => {
+        switch (folder) {
+          case "services":
+            return "index.f.ts";
+          case "hooks":
+            return "index.hook.ts";
+          case "types":
+            return "index.type.ts";
+          default:
+            return "";
+        }
+      };
+
+      mkdirp.sync(`${folder}`);
+
+      if (sourceCopy(folder).length > 1) {
+        const indexSubdir = `${folder}/${depascalize(
+          this.name,
+          "-"
+        )}.${singular(folder)}.ts`;
+
+        this.fs.copyTpl(
+          this.templatePath(sourceCopy(folder)),
+          this.destinationPath(indexSubdir),
+          {
+            feature: this.name,
+            project: this.project,
+            filename: `${folder}/${depascalize(this.name, "-")}.${folder}`,
+            className: pascalize(this.name) + pascalize(singular(folder)),
+            defaultFunction: camelize(depascalize(this.name, "_"))
+          }
+        );
+
+        this.fs.append(
+          this.destinationPath("index.ts"),
+          `export * from './${folder}/${depascalize(this.name, "-")}.${singular(
+            folder
+          )}';`
+        );
+      }
     });
   }
 
