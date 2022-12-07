@@ -1,15 +1,13 @@
 {
   "name": "generator-wow-react",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "yeoman generator nextjs project & react tsx components, inspired by https://github.com/TonyDotDev/generator-react-tsx-component",
   "homepage": "https://github.com/awim/generator-wow-react#readme",
   "author": "awim",
   "files": [
-    "project",
-    "component",
-    "feature"
+    "generators"
   ],
-  "main": "index.js",
+  "main": "index.ts",
   "keywords": [
     "yeoman-generator",
     "scaffolding",

@@ -12,7 +12,7 @@ const <%= name %>Story = {
 };
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof <%= name %>> = ({label}: <%= name %>Props ) => <<%= name %> label={label} />;
+const Template: ComponentStory<typeof <%= name %>> = ({...args}: <%= name %>Props ) => <<%= name %> {...args} />;
 
 export const Primary = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
