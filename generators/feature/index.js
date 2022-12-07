@@ -114,7 +114,7 @@ module.exports = class extends Generator {
       );
       this.composeWith("wow-react:component", {
         arguments: [this.options.name],
-        path: `./components`
+        path: `components`
       });
     }
   }
