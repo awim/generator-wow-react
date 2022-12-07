@@ -36,27 +36,19 @@ module.exports = class extends Generator {
       description: "Path where the feature directory will be created"
     });
 
-    this.option("recursive", {
-      type: Boolean,
-      default: false,
-      description: "Duplicate path folder inside feature directory"
-    });
-
     this.name = this.options.name;
     this.path = this.options.path;
     this.folders = this.options.folders;
   }
 
-  initializing() {
-    this.log(
-      `generate ${
-        this.options.name
-      } on ${this._generateDestination()}/components`
-    );
-    this.composeWith("wow-react:component", {
-      arguments: [this.options.name],
-      path: "components"
-    });
+  async prompting() {
+    this.input = await this.prompt([
+      {
+        type: "confirm",
+        name: "withComponent",
+        message: "Would you like to generate the component as well?"
+      }
+    ]);
   }
 
   writing() {
@@ -113,6 +105,18 @@ module.exports = class extends Generator {
         );
       }
     });
+
+    if (this.input.withComponent) {
+      this.log(
+        `generate ${
+          this.options.name
+        } on ${this._generateDestination()}/components`
+      );
+      this.composeWith("wow-react:component", {
+        arguments: [this.options.name],
+        path: `./components`
+      });
+    }
   }
 
   end() {
