@@ -1,2 +1,2 @@
 export * from './<%= name %>';
-export * from './<%= name %>.helper';
+export * from './<%= name %>Helper';
