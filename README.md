@@ -14,23 +14,36 @@ This module will help you to create structural directory folder for generating c
 - node version 16.17
 
 
-## Intalling from npm
+## How to Use
 
 on your project root directory
 
-#### using npm
+#### 1. Installing
+using npm
 ```
   npm install generator-wow-react
 ```
 
-#### using yarn
+using yarn
 ```
   yarn add generator-wow-react
 ```
 
+#### 2. Generate component
+
+```
+    yo wow-react:component
+```
+
+#### 3. Generate Feature
+
+```
+    yo wow-react:feature
+```
 
 
-## Intalling from git & connect locally
+
+## How to Enhance
 
 #### 1. Clone from git
 
