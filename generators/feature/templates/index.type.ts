@@ -1,7 +1,9 @@
 export interface I<%= className %> {
-    key: type;
+    // example
+    // key: type;
 }
 
 export type <%= className %> = {
-    key: type,
+    // example
+    // key: type,
 }
