@@ -73,7 +73,7 @@ module.exports = class extends Generator {
 
     // Write css file
     this.fs.copyTpl(
-      this.templatePath("component.scss"),
+      this.templatePath("component.module.scss"),
       this.destinationPath(this.name + ".scss"),
       {
         className: this.className
