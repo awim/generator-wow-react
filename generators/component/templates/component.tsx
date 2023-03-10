@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './<%= name %>.scss';
+import './<%= name %>.module.scss';
 
 export interface <%= name %>Props {
   label?: string,
