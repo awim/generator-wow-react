@@ -13,6 +13,78 @@ This module will help you to create structural directory folder for generating c
 ```
 - node version 16.17
 
+## Concept
+When using generator-wow-react you can simply generate your component or feature on your project application
+#### Basic syntax making component
+```
+  yarn component ComponentName
+```
+it will make directory folder like this
+```
+└── src/
+    └── ui/
+        └── component/
+            └── ComponentName/
+                ├── _test_/
+                │   └── ComponentName.test.tsx
+                ├── story/
+                │   ├── ComponentName.story.mdx
+                │   └── ComponentName.story.tsx
+                ├── ComponentName.module.scss
+                ├── ComponentName.tsx
+                ├── ComponentNameHelper.ts
+                └── index.ts
+```
+#### Custom Path syntax making component
+If you want to make a root component grouping example Chart/BarChart, you can use syntax like this
+```
+  yarn component RootComponentName/ComponentName
+```
+
+it will make directory folder like this
+```
+└── src/
+    └── ui/
+        └── component/
+            └── RootComponentName/
+                └── ComponentName/
+                    ├── _test_/
+                    │   └── ComponentName.test.tsx
+                    ├── story/
+                    │   ├── ComponentName.story.mdx
+                    │   └── ComponentName.story.tsx
+                    ├── ComponentName.module.scss
+                    ├── ComponentName.tsx
+                    ├── ComponentNameHelper.ts
+                    └── index.ts
+```
+#### Basic syntax making feature
+```
+  yarn feature NameFeature
+```
+it will make directory folder like this
+```
+└── src/
+    └── features/
+        └── component/
+            ├── FeatureName/
+            │   ├── _test_/
+            │   │   └── FeatureName.test.tsx
+            │   ├── story/
+            │   │   ├── FeatureName.story.mdx
+            │   │   └── FeatureName.story.tsx
+            │   ├── FeatureName.module.scss
+            │   ├── FeatureName.tsx
+            │   ├── FeaHelpertureName.ts
+            │   └── index.ts
+            ├── hooks/
+            │   └── chart.hook.ts
+            ├── services/
+            │   └── chart.service.ts
+            ├── types/
+            │   └── chart.type.ts
+            └── index.ts
+```
 
 ## How to Use
 
