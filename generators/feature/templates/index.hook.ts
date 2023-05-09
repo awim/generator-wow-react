@@ -1,3 +1,3 @@
-export const use<%= feature %> = async (params:type) => {
+export const use<%= feature %> = async (params:any) => {
     return;
 }
