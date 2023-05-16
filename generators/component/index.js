@@ -59,12 +59,25 @@ module.exports = class extends Generator {
       return path + "/" + type + "/" + name;
     };
 
-    this.name = this.options.name;
+    this.generateName = function() {
+      if (this.options.name.split("/").length === 1) {
+        this.getName = this.options.name;
+        return this.getName;
+      }
+
+      if (this.options.name.split("/").length > 1) {
+        let tempName = this.options.name.split("/");
+        this.getName = tempName[1];
+        return this.getName;
+      }
+    };
+
+    this.name = this.generateName();
     this.type = this.options.type;
     this.project = this.options.project;
     this.storybook = this.options.storybook;
     this.test = this.options.test;
-    this.className = depascalize(this.options.name, "-");
+    this.className = depascalize(this.generateName(), "-");
   }
 
   writing() {

@@ -1,9 +1,9 @@
 export class <%= className %> {
-    constructor(parameters) {
+    constructor() {
         
     }
 }
 
-export const <%= defaultFunction %> = async (params:type) => {
+export const <%= defaultFunction %> = async (params:any) => {
     return;
 }
