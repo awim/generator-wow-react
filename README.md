@@ -86,6 +86,52 @@ it will make directory folder like this
             └── index.ts
 ```
 
+```
+yarn component OtherFeatureComponent --path src/features/RootFeature
+```
+
+it will make directory folder like this
+
+```
+└── src/
+    └── features/
+        └── component/
+            ├── FeatureName/
+            │   ├── _test_/
+            │   │   └── FeatureName.test.tsx
+            │   ├── story/
+            │   │   ├── FeatureName.story.mdx
+            │   │   └── FeatureName.story.tsx
+            │   ├── FeatureName.module.scss
+            │   ├── FeatureName.tsx
+            │   ├── FeaHelpertureName.ts
+            │   └── index.ts
+            ├── hooks/
+            │   └── chart.hook.ts
+            ├── services/
+            │   └── chart.service.ts
+            ├── types/
+            │   └── chart.type.ts
+            └── index.ts
+                └── component/
+            ├── OtherFeatureComponent/
+            │   ├── _test_/
+            │   │   └── OtherFeatureComponent.test.tsx
+            │   ├── story/
+            │   │   ├── OtherFeatureComponent.story.mdx
+            │   │   └── OtherFeatureComponent.story.tsx
+            │   ├── OtherFeatureComponent.module.scss
+            │   ├── OtherFeatureComponent.tsx
+            │   ├── FeaHelpertureName.ts
+            │   └── index.ts
+            ├── hooks/
+            │   └── chart.hook.ts
+            ├── services/
+            │   └── chart.service.ts
+            ├── types/
+            │   └── chart.type.ts
+            └── index.ts
+```
 ## How to Use
 
 on your project root directory
