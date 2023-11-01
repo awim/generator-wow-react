@@ -116,7 +116,7 @@ module.exports = class extends Generator {
     if (this.storybook) {
       this.fs.copyTpl(
         this.templatePath("component.story.tsx"),
-        this.destinationPath("story/", this.name + ".story.tsx"),
+        this.destinationPath("story/", this.name + ".stories.tsx"),
         {
           name: this.name,
           project: this.project
