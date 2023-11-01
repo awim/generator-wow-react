@@ -115,7 +115,7 @@ module.exports = class extends Generator {
     // Write story file
     if (this.storybook) {
       this.fs.copyTpl(
-        this.templatePath("component.story.tsx"),
+        this.templatePath("component.stories.tsx"),
         this.destinationPath("story/", this.name + ".stories.tsx"),
         {
           name: this.name,
