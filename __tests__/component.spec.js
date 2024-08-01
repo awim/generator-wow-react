@@ -2,6 +2,7 @@ const path = require("path");
 const assert = require("yeoman-assert");
 const helpers = require("yeoman-test");
 
+// Test generate AwesomeComponent
 const componentName = "Awesome";
 
 describe("generator-wow-react:component", () => {
