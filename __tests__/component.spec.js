@@ -16,7 +16,7 @@ describe("generator-wow-react:component", () => {
       "Awesome.tsx",
       "AwesomeHelper.ts",
       "Awesome.scss",
-      "story/Awesome.story.tsx",
+      "story/Awesome.stories.tsx",
       "story/Awesome.story.mdx"
     ]);
   });
