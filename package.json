@@ -1,6 +1,6 @@
 {
   "name": "generator-wow-react",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "yeoman generator nextjs project & react tsx components, inspired by https://github.com/TonyDotDev/generator-react-tsx-component",
   "homepage": "https://github.com/awim/generator-wow-react#readme",
   "author": "awim",
@@ -54,6 +54,7 @@
   },
   "dependencies": {
     "chalk": "^2.1.0",
+    "csv-parser": "^3.0.0",
     "mkdirp": "^1.0.4",
     "pluralize": "^8.0.0",
     "xcase": "^2.0.1"

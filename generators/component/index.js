@@ -7,7 +7,7 @@ const { depascalize, decamelize } = require("xcase");
 module.exports = class extends Generator {
   constructor(args, opts) {
     super(args, opts);
-    this.log("Creating component...");
+    this.log("Yeoman generator-wow-react:component");
 
     this.argument("name", {
       type: String,
@@ -29,21 +29,22 @@ module.exports = class extends Generator {
 
     this.option("storybook", {
       type: Boolean,
-      default: true,
+      default: this.config.get("generateStorybookComponent") ?? false,
       description:
         "Add a 'story' directory in the component folder with some boilerplate for @storybook/react"
     });
 
     this.option("test", {
       type: Boolean,
-      default: true,
+      default: this.config.get("generateTestComponent") ?? true,
       description:
         "Adds a __tests__ directory in the component folder with some boilerplate for @testing-library/react."
     });
 
     this.option("path", {
       type: String,
-      default: "src/ui/components",
+      default:
+        this.config.get("componentGeneratedDirPath") ?? "src/ui/components",
       description: "Path where the component directory will be created"
     });
 
@@ -78,6 +79,17 @@ module.exports = class extends Generator {
     this.storybook = this.options.storybook;
     this.test = this.options.test;
     this.className = depascalize(this.generateName(), "-");
+  }
+
+  initializing() {
+    this.config.defaults({
+      featureDirPath: "src/main/webapp/app/modules",
+      featureGeneratedFolders:
+        "services, components, hooks, types, utils, __tests__",
+      componentGeneratedDirPath: "src/main/webapp/app/components",
+      generateTestComponent: true,
+      generateStorybookComponent: false
+    });
   }
 
   writing() {

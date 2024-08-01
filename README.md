@@ -10,16 +10,29 @@ This module will help you to create structural directory folder for generating c
   npm install -g yarn
 ```
 
-- node version 16.17
+- node version > 16.17
 
 ## Concept
 
-When using generator-wow-react you can simply generate your component or feature on your project application
+When using generator-wow-react you can simply generate your component or feature on your react project application
+
+## Register the command
+Register the command on your package.json file to recognize the generator as part of your cli
+- open package.json
+- add these line under scripts property
+  ```
+  "scripts": {
+    ...
+    "wow-component": "yo wow-react:component",
+    "wow-feature": "yo wow-react:feature",
+  }
+  ```
+- save the modification
 
 #### Basic syntax making component
 
 ```
-  yarn component ComponentName
+  yarn wow-component ComponentName
 ```
 
 it will make directory folder like this
@@ -45,7 +58,7 @@ it will make directory folder like this
 If you want to make a root component grouping example Chart/BarChart, you can use syntax like this
 
 ```
-  yarn component RootComponentName/ComponentName
+  yarn wow-component RootComponentName/ComponentName
 ```
 
 it will make directory folder like this
@@ -70,7 +83,7 @@ it will make directory folder like this
 #### Basic syntax making feature
 
 ```
-  yarn feature NameFeature
+  yarn wow-feature NameFeature
 ```
 
 it will make directory folder like this
@@ -99,7 +112,7 @@ it will make directory folder like this
 ```
 
 ```
-yarn component OtherFeatureComponent --path src/features/RootFeature
+yarn wow-component OtherFeatureComponent --path src/features/RootFeature
 ```
 
 it will make directory folder like this
@@ -147,9 +160,9 @@ it will make directory folder like this
 
 #### Syntax for making component on specific feature directory
 
-```
 example
-yarn component Test --path src\features\AccountInformation\components
+```
+yarn wow-component Test --path src\features\AccountInformation\components
 ```
 
 ## How to Use
@@ -161,26 +174,39 @@ on your project root directory
 using npm
 
 ```
-  npm install generator-wow-react
+  npm install yo generator-wow-react
 ```
 
 using yarn
 
-```
-  yarn add generator-wow-react
+```bash
+  yarn add -D yo generator-wow-react
 ```
 
 #### 2. Generate component
 
-```
-    yo wow-react:component
+```bash
+    yo wow-react:component <ComponentName> -path <AlternativePath>
 ```
 
 #### 3. Generate Feature
 
+```bash
+    yo wow-react:feature <FeatureName> -path <AlternativePath>
 ```
-    yo wow-react:feature
+
+#### 4. Store your configuration
+generator-wow-react initially save the configuration in yo-rc.json
+```json
+"generator-wow-react": {
+    "featureDirPath": "src/main/webapp/app/modules",
+    "featureGeneratedFolders": "services, components, hooks, types, utils, __tests__",
+    "componentGeneratedDirPath": "src/main/webapp/app/components",
+    "generateTestComponent": true,
+    "generateStorybookComponent": false
+  }
 ```
+update the configuration based on your needs
 
 ## How to Enhance
 
