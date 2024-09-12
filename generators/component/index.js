@@ -2,7 +2,7 @@
 
 const Generator = require("yeoman-generator");
 const yosay = require("yosay");
-const { depascalize, decamelize } = require("xcase");
+const { pascalize, depascalize, decamelize } = require("xcase");
 
 module.exports = class extends Generator {
   constructor(args, opts) {
@@ -32,6 +32,13 @@ module.exports = class extends Generator {
       default: this.config.get("generateStorybookComponent") ?? false,
       description:
         "Add a 'story' directory in the component folder with some boilerplate for @storybook/react"
+    });
+
+    this.option("story-folder", {
+      type: Boolean,
+      default: this.config.get("storyFolder") ?? "story/",
+      description:
+        "Set directory location of generated '*.stories.tsx' of the components"
     });
 
     this.option("test", {
@@ -88,7 +95,8 @@ module.exports = class extends Generator {
         "services, components, hooks, types, utils, __tests__",
       componentGeneratedDirPath: "src/main/webapp/app/components",
       generateTestComponent: true,
-      generateStorybookComponent: false
+      generateStorybookComponent: false,
+      storyFolder: "story/"
     });
   }
 
@@ -110,7 +118,7 @@ module.exports = class extends Generator {
       this.templatePath("component.tsx"),
       this.destinationPath(this.name + ".tsx"),
       {
-        name: this.name,
+        name: pascalize(this.name),
         className: this.className
       }
     );
@@ -118,9 +126,9 @@ module.exports = class extends Generator {
     // Write component helper file
     this.fs.copyTpl(
       this.templatePath("component.helper.ts"),
-      this.destinationPath(this.name + "Helper.ts"),
+      this.destinationPath(this.name + ".helper.ts"),
       {
-        name: this.name
+        name: pascalize(this.name)
       }
     );
 
@@ -130,7 +138,7 @@ module.exports = class extends Generator {
         this.templatePath("component.stories.tsx"),
         this.destinationPath("story/", this.name + ".stories.tsx"),
         {
-          name: this.name,
+          name: pascalize(this.name),
           project: this.project
         }
       );
@@ -140,7 +148,7 @@ module.exports = class extends Generator {
         this.templatePath("component.story.mdx"),
         this.destinationPath("story/", this.name + ".story.mdx"),
         {
-          name: this.name,
+          name: pascalize(this.name),
           project: this.project
         }
       );
@@ -152,7 +160,7 @@ module.exports = class extends Generator {
         this.templatePath("component.test.tsx"),
         this.destinationPath("__tests__/", this.name + ".test.tsx"),
         {
-          name: this.name
+          name: pascalize(this.name)
         }
       );
     }
@@ -162,7 +170,7 @@ module.exports = class extends Generator {
       this.templatePath("index.ts"),
       this.destinationPath("index.ts"),
       {
-        name: this.name,
+        name: pascalize(this.name),
         className: this.className
       }
     );
