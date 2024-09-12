@@ -4,7 +4,7 @@ const Generator = require("yeoman-generator");
 const yosay = require("yosay");
 const mkdirp = require("mkdirp");
 const { depascalize, pascalize, camelize } = require("xcase");
-const { singular } = require("pluralize");
+const pluralize = require("pluralize-esm");
 
 module.exports = class extends Generator {
   _generateDestination() {
@@ -109,7 +109,7 @@ module.exports = class extends Generator {
         const indexSubdir = `${folder}/${depascalize(
           this.name,
           "-"
-        )}.${singular(folder)}.ts`;
+        )}.${pluralize.singular(folder)}.ts`;
 
         this.fs.copyTpl(
           this.templatePath(sourceCopy(folder)),
@@ -118,16 +118,18 @@ module.exports = class extends Generator {
             feature: this.name,
             project: this.project,
             filename: `${folder}/${depascalize(this.name, "-")}.${folder}`,
-            className: pascalize(this.name) + pascalize(singular(folder)),
+            className:
+              pascalize(this.name) + pascalize(pluralize.singular(folder)),
             defaultFunction: camelize(depascalize(this.name, "_"))
           }
         );
 
         this.fs.append(
           this.destinationPath("index.ts"),
-          `export * from './${folder}/${depascalize(this.name, "-")}.${singular(
-            folder
-          )}';`
+          `export * from './${folder}/${depascalize(
+            this.name,
+            "-"
+          )}.${pluralize.singular(folder)}';`
         );
       }
     });

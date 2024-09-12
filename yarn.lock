@@ -5428,10 +5428,10 @@ please-upgrade-node@^3.1.1, please-upgrade-node@^3.2.0:
   dependencies:
     semver-compare "^1.0.0"
 
-pluralize@^8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-8.0.0.tgz#1a6fa16a38d12a1901e0320fa017051c539ce3b1"
-  integrity sha512-Nc3IT5yHzflTfbjgqWcCPpo7DaKy4FnpB0l/zCAW0Tc7jxAiuqSxHasntB3D7887LSrA93kDJ9IXovxJYxyLCA==
+pluralize-esm@^9.0.5:
+  version "9.0.5"
+  resolved "https://registry.yarnpkg.com/pluralize-esm/-/pluralize-esm-9.0.5.tgz#002d75789f5d1ea695adebac56f5b94cd4f1aeab"
+  integrity sha512-Kb2dcpMsIutFw2hYrN0EhsAXOUJTd6FVMIxvNAkZCMQLVt9NGZqQczvGpYDxNWCZeCWLHUPxQIBudWzt1h7VVA==
 
 posix-character-classes@^0.1.0:
   version "0.1.1"
