@@ -7,8 +7,8 @@ export type <%= componentName %>Props = {
 }
 
 
-export function <%= componentName %>({label}: <%= componentName %>Props): React.ReactElement {
-  return <div className='<%= className %>'>{ label }</div>;
+export function <%= componentName %>({label}: Readonly<<%= componentName %>Props>): React.ReactElement {
+  return <div className={ styles._ }>{ label }</div>;
 }
 
 // https://reactjs.org/docs/typechecking-with-proptypes.html

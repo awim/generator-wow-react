@@ -4,12 +4,9 @@ function replaceNonWordCharacters(str, replacer = '_') {
     return str.replace(/[\W_]+/g, replacer).trim();
 }
 
-function resetAsUnixPath(fullPath, parentDir = '') {
+function toPosixPath(fullPath, parentDir = '') {
     // Remove the parent directory and replace Windows backslashes with Unix forward slashes
-    const relativePath = fullPath.replace(parentDir, '').replace(/\\/g, '/').substring(1);
-    
-    // Normalize the path to remove any redundant slashes
-    return path.posix.normalize(relativePath);
-  }
+    return fullPath.replace(parentDir, '').replace(/\\/g, '/');
+}
 
-module.exports = { replaceNonWordCharacters, resetAsUnixPath }
+module.exports = { replaceNonWordCharacters, toPosixPath }
