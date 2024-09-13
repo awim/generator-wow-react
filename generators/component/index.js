@@ -2,7 +2,8 @@
 
 const Generator = require("yeoman-generator");
 const yosay = require("yosay");
-const { pascalize, depascalize, decamelize } = require("xcase");
+const { pascalize, depascalize, decamelize } = require("@v-lab/xcase");
+const { replaceNonWordCharacters, resetAsUnixPath } = require("../../utils/wow-helper");
 
 module.exports = class extends Generator {
   constructor(args, opts) {
@@ -27,6 +28,13 @@ module.exports = class extends Generator {
       description: "Set your component's type"
     });
 
+    this.option("helper", {
+      type: Boolean,
+      default: this.config.get("generateHelperComponent") ?? false,
+      description:
+        "Create a 'helper' component to facilitate event handler in components"
+    });
+
     this.option("storybook", {
       type: Boolean,
       default: this.config.get("generateStorybookComponent") ?? false,
@@ -34,9 +42,9 @@ module.exports = class extends Generator {
         "Add a 'story' directory in the component folder with some boilerplate for @storybook/react"
     });
 
-    this.option("story-folder", {
-      type: Boolean,
-      default: this.config.get("storyFolder") ?? "story/",
+    this.option("storypath", {
+      type: String,
+      default: this.config.get("storyFolder") ?? "src/stories/",
       description:
         "Set directory location of generated '*.stories.tsx' of the components"
     });
@@ -51,7 +59,7 @@ module.exports = class extends Generator {
     this.option("path", {
       type: String,
       default:
-        this.config.get("componentGeneratedDirPath") ?? "src/ui/components",
+        this.config.get("componentGeneratedDirPath") ?? "src/app/components",
       description: "Path where the component directory will be created"
     });
 
@@ -81,27 +89,33 @@ module.exports = class extends Generator {
     };
 
     this.name = this.generateName();
+    this.path = this.options.path;
     this.type = this.options.type;
     this.project = this.options.project;
+    this.helper = this.options.helper;
     this.storybook = this.options.storybook;
+    this.storypath = this.options.storypath;
     this.test = this.options.test;
     this.className = depascalize(this.generateName(), "-");
   }
 
   initializing() {
     this.config.defaults({
-      featureDirPath: "src/main/webapp/app/modules",
+      featureDirPath: "src/app/modules",
       featureGeneratedFolders:
         "services, components, hooks, types, utils, __tests__",
-      componentGeneratedDirPath: "src/main/webapp/app/components",
-      generateTestComponent: true,
+      componentGeneratedDirPath: "src/app/components",
+      generateTestComponent: false,
+      generateHelperComponent: false,
       generateStorybookComponent: false,
-      storyFolder: "story/"
+      storyFolder: "src/stories/"
     });
   }
 
   writing() {
     // Create component directory
+    const ComponentName = pascalize(replaceNonWordCharacters(this.name));
+    const relativePath = resetAsUnixPath(this.path, this.destinationRoot());
     this.destinationRoot(this.generateDestination());
 
     // Write css file
@@ -118,38 +132,20 @@ module.exports = class extends Generator {
       this.templatePath("component.tsx"),
       this.destinationPath(this.name + ".tsx"),
       {
-        name: pascalize(this.name),
+        name: this.name,
+        componentName: ComponentName,
         className: this.className
       }
     );
 
     // Write component helper file
-    this.fs.copyTpl(
-      this.templatePath("component.helper.ts"),
-      this.destinationPath(this.name + ".helper.ts"),
-      {
-        name: pascalize(this.name)
-      }
-    );
-
-    // Write story file
-    if (this.storybook) {
+    if (this.helper) {
       this.fs.copyTpl(
-        this.templatePath("component.stories.tsx"),
-        this.destinationPath("story/", this.name + ".stories.tsx"),
+        this.templatePath("component.helper.ts"),
+        this.destinationPath(this.name + ".helper.ts"),
         {
-          name: pascalize(this.name),
-          project: this.project
-        }
-      );
-
-      // Write story docs file
-      this.fs.copyTpl(
-        this.templatePath("component.story.mdx"),
-        this.destinationPath("story/", this.name + ".story.mdx"),
-        {
-          name: pascalize(this.name),
-          project: this.project
+          name: this.name,
+          componentName: ComponentName,
         }
       );
     }
@@ -160,7 +156,8 @@ module.exports = class extends Generator {
         this.templatePath("component.test.tsx"),
         this.destinationPath("__tests__/", this.name + ".test.tsx"),
         {
-          name: pascalize(this.name)
+          name: this.name,
+          componentName: ComponentName,
         }
       );
     }
@@ -170,10 +167,34 @@ module.exports = class extends Generator {
       this.templatePath("index.ts"),
       this.destinationPath("index.ts"),
       {
-        name: pascalize(this.name),
+        name: this.name,
+        componentName: ComponentName,
         className: this.className
       }
     );
+
+    //reset destination root for storybook
+    this.destinationRoot();
+
+    // Write story file
+    if (this.storybook) {      
+      this.fs.copyTpl(
+        this.templatePath("component.stories.tsx"),
+        this.destinationPath(`${this.storypath}/${this.name}.stories.tsx`),
+        {
+          name: this.name,
+          componentName: ComponentName,
+          relativePath,
+          project: this.project
+        },
+        {},
+        {
+          globOptions: {
+            absolute: true
+          }
+        }
+      );
+    }
   }
 
   end() {

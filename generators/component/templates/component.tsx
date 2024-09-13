@@ -2,16 +2,16 @@ import React from 'react';
 
 import styles from './<%= name %>.module.scss';
 
-export interface <%= name %>Props {
+export type <%= componentName %>Props = {
   label?: string,
 }
 
 
-export function <%= name %>({label}: <%= name %>Props): React.ReactElement {
+export function <%= componentName %>({label}: <%= componentName %>Props): React.ReactElement {
   return <div className='<%= className %>'>{ label }</div>;
 }
 
 // https://reactjs.org/docs/typechecking-with-proptypes.html
-<%= name %>.defaultProps = {
-  label: 'My awesome <%= name %> component',
+<%= componentName %>.defaultProps = {
+  label: 'My awesome <%= componentName %> component',
 }

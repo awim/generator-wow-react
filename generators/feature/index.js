@@ -2,9 +2,9 @@
 
 const Generator = require("yeoman-generator");
 const yosay = require("yosay");
-const mkdirp = require("mkdirp");
-const { depascalize, pascalize, camelize } = require("xcase");
+const { depascalize, pascalize, camelize } = require("@v-lab/xcase");
 const pluralize = require("pluralize-esm");
+const { replaceNonWordCharacters } = require("../../utils/wow-helper");
 
 module.exports = class extends Generator {
   _generateDestination() {
@@ -34,7 +34,7 @@ module.exports = class extends Generator {
 
     this.option("path", {
       type: String,
-      default: this.config.get("featureDirPath") ?? "src/features",
+      default: this.config.get("featureDirPath") ?? "src/app/features",
       description: "Path where the feature directory will be created"
     });
 
@@ -68,18 +68,21 @@ module.exports = class extends Generator {
 
   initializing() {
     this.config.defaults({
-      featureDirPath: "src/main/webapp/app/modules",
+      featureDirPath: "src/app/modules",
       featureGeneratedFolders:
         "services, components, hooks, types, utils, __tests__",
-      componentGeneratedDirPath: "src/main/webapp/app/components",
-      generateTestComponent: true,
-      generateStorybookComponent: false
+      componentGeneratedDirPath: "src/app/components",
+      generateTestComponent: false,
+      generateHelperComponent: false,
+      generateStorybookComponent: false,
+      storyFolder: "src/stories/"
     });
   }
 
   writing() {
     // Create feature directory
     this.destinationRoot(this._generateDestination());
+    const pascalFeatureName = pascalize(replaceNonWordCharacters(this.name));
 
     // Write feature export file
     this.fs.copyTpl(
@@ -103,8 +106,6 @@ module.exports = class extends Generator {
         }
       };
 
-      mkdirp.sync(`${folder}`);
-
       if (sourceCopy(folder).length > 1) {
         const indexSubdir = `${folder}/${depascalize(
           this.name,
@@ -118,9 +119,9 @@ module.exports = class extends Generator {
             feature: this.name,
             project: this.project,
             filename: `${folder}/${depascalize(this.name, "-")}.${folder}`,
-            className:
-              pascalize(this.name) + pascalize(pluralize.singular(folder)),
-            defaultFunction: camelize(depascalize(this.name, "_"))
+            componentName: pascalFeatureName,
+            className: pascalFeatureName + pascalize(pluralize.singular(folder)),
+            defaultFunction: camelize(pascalFeatureName) + pascalize(pluralize.singular(folder))
           }
         );
 
