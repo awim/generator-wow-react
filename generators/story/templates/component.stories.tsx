@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meta, StoryObj } from "@storybook/react";
 
-import { <%= componentName %>, <%= componentName %>Props } from '<%= relativePath %>';
+import { <%= componentName %> } from '<%= relativePath %>';
 
 
 const meta: Meta<typeof <%= componentName %>> = {
