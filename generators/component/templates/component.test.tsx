@@ -1,7 +1,7 @@
 import { render } from '@/test/test-utils';
 
-import { <%= name %> } from '../<%= name %>';
+import { <%= componentName %> } from '../<%= name %>';
 
-describe('<%= name %>', () => {
-  render({ui: <<%= name %> />});
+describe('<%= componentName %> test render', () => {
+  render({ui: <<%= componentName %> />});
 })

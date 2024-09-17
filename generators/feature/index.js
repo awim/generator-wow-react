@@ -2,9 +2,9 @@
 
 const Generator = require("yeoman-generator");
 const yosay = require("yosay");
-const mkdirp = require("mkdirp");
-const { depascalize, pascalize, camelize } = require("xcase");
-const { singular } = require("pluralize");
+const { depascalize, pascalize, camelize } = require("@v-lab/xcase");
+const pluralize = require("pluralize-esm");
+const { replaceNonWordCharacters } = require("../../utils/wow-helper");
 
 module.exports = class extends Generator {
   _generateDestination() {
@@ -15,7 +15,7 @@ module.exports = class extends Generator {
 
   constructor(args, opts) {
     super(args, opts);
-    this.log("Creating feature...");
+    this.log("Yeoman generator-wow-react:feature");
 
     this.argument("name", {
       type: String,
@@ -26,13 +26,15 @@ module.exports = class extends Generator {
 
     this.option("folders", {
       type: String,
-      default: "services, components, hooks, types, utils, __tests__",
+      default:
+        this.config.get("featureGeneratedFolders") ??
+        "services, components, hooks, types, utils, __tests__",
       description: "List folders to be generated in the feature directory"
     });
 
     this.option("path", {
       type: String,
-      default: "src/features",
+      default: this.config.get("featureDirPath") ?? "src/app/features",
       description: "Path where the feature directory will be created"
     });
 
@@ -64,9 +66,23 @@ module.exports = class extends Generator {
     ]);
   }
 
+  initializing() {
+    this.config.defaults({
+      featureDirPath: "src/app/modules",
+      featureGeneratedFolders:
+        "services, components, hooks, types, utils, __tests__",
+      componentGeneratedDirPath: "src/app/components",
+      generateTestComponent: false,
+      generateHelperComponent: false,
+      generateStorybookComponent: false,
+      storyFolder: "src/stories/"
+    });
+  }
+
   writing() {
     // Create feature directory
     this.destinationRoot(this._generateDestination());
+    const pascalFeatureName = pascalize(replaceNonWordCharacters(this.name));
 
     // Write feature export file
     this.fs.copyTpl(
@@ -90,13 +106,11 @@ module.exports = class extends Generator {
         }
       };
 
-      mkdirp.sync(`${folder}`);
-
       if (sourceCopy(folder).length > 1) {
         const indexSubdir = `${folder}/${depascalize(
           this.name,
           "-"
-        )}.${singular(folder)}.ts`;
+        )}.${pluralize.singular(folder)}.ts`;
 
         this.fs.copyTpl(
           this.templatePath(sourceCopy(folder)),
@@ -105,16 +119,18 @@ module.exports = class extends Generator {
             feature: this.name,
             project: this.project,
             filename: `${folder}/${depascalize(this.name, "-")}.${folder}`,
-            className: pascalize(this.name) + pascalize(singular(folder)),
-            defaultFunction: camelize(depascalize(this.name, "_"))
+            componentName: pascalFeatureName,
+            className: pascalFeatureName + pascalize(pluralize.singular(folder)),
+            defaultFunction: camelize(pascalFeatureName) + pascalize(pluralize.singular(folder))
           }
         );
 
         this.fs.append(
           this.destinationPath("index.ts"),
-          `export * from './${folder}/${depascalize(this.name, "-")}.${singular(
-            folder
-          )}';`
+          `export * from './${folder}/${depascalize(
+            this.name,
+            "-"
+          )}.${pluralize.singular(folder)}';`
         );
       }
     });

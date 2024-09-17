@@ -1,3 +1,3 @@
-export const use<%= feature %> = async (params:any) => {
+export const use<%= componentName %> = async (args:any) => {
     return;
 }
