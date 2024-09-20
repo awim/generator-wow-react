@@ -16,6 +16,23 @@ This module will help you to create structural directory folder for generating c
 
 When using generator-wow-react you can simply generate your component or feature on your react project application
 
+## Generator Settings
+You can configure the generator settings by modifying the .yo-rc.json file. Here are the available options:
+
+```componentGeneratedDirPath```: The directory path where generated components will be placed (e.g., "src/app/components").
+
+```featureDirPath```: The base directory for feature modules (e.g., "src/app/features").
+
+```featureGeneratedFolders```: A comma-separated list of subfolders within each feature module (e.g., "services, components, hooks, types"). Use this to segment your code logically.
+
+```generateStorybookComponent```: Set to true if you want to generate Storybook stories for your components.
+
+```generateTestComponent```: Set to true if you want to generate test files for your components.
+
+```storyFolder```: The folder where Storybook stories will be created (e.g., "src/stories").
+
+```generateHelperComponent```: Set to true if you want to generate helper components.
+
 ## Register the command
 Register the command on your package.json file to recognize the generator as part of your cli
 - open package.json
@@ -23,11 +40,14 @@ Register the command on your package.json file to recognize the generator as par
   ```
   "scripts": {
     ...
-    "wow-component": "yo wow-react:component",
-    "wow-feature": "yo wow-react:feature",
+    "wow:component": "yo wow-react:component",
+    "wow:feature": "yo wow-react:feature",
   }
   ```
 - save the modification
+- run the command using `yarn` or `npm run` 
+  
+  `yarn wow:component YourComponentName.Prefix --path /your/custom/path`
 
 #### Basic syntax making component
 
