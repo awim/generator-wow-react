@@ -185,9 +185,9 @@ module.exports = class extends Generator {
   }
 
   end() {
-    const outputMsg = `\n\nYour React TSX component ${this.name} ${
+    const outputMsg = `\nYour React TSX component ${this.name} ${
       this.type ? "with " + this.type : ""
     } has been created.`;
-    this.log(yosay(outputMsg));
+    this.log(outputMsg);
   }
 };

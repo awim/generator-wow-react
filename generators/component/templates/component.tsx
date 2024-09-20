@@ -7,7 +7,7 @@ export type <%= componentName %>Props = {
 }
 
 
-export function <%= componentName %>({label}: Readonly<<%= componentName %>Props>): React.ReactElement {
+export const <%= componentName %> = ({label}: Readonly<<%= componentName %>Props>) => {
   return <div className={ styles._ }>{ label }</div>;
 }
 

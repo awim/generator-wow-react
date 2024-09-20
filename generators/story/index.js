@@ -121,9 +121,9 @@ module.exports = class extends Generator {
   }
 
   end() {
-    const outputMsg = `\n\nYour storybook component ${this.name} ${
+    const outputMsg = `\nYour storybook component ${this.name} ${
       this.type ? "with " + this.type : ""
     } has been created.`;
-    this.log(yosay(outputMsg));
+    this.log(outputMsg);
   }
 };
