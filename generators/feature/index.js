@@ -149,7 +149,7 @@ module.exports = class extends Generator {
   }
 
   end() {
-    const outputMsg = `\n\nYour feature ${this.name} has been created.`;
-    this.log(yosay(outputMsg));
+    const outputMsg = `\nYour feature ${this.name} has been created.`;
+    this.log(outputMsg);
   }
 };
