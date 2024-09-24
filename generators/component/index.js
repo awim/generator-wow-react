@@ -1,7 +1,6 @@
 "use strict";
 
 const Generator = require("yeoman-generator");
-const yosay = require("yosay");
 const { pascalize, depascalize, decamelize } = require("@v-lab/xcase");
 const { replaceNonWordCharacters } = require("../../utils/wow-helper");
 
@@ -69,10 +68,11 @@ module.exports = class extends Generator {
 
     this.generateDestination = function() {
       const { path, name, type } = this.options;
-      if (path === "" && type === "") return name;
-      if (path !== "" && type === "") return path + "/" + name;
-      if (path === "" && type !== "") return type + "/" + name;
-      return path + "/" + type + "/" + name;
+      const parseName = name.replace('.', '-');
+      if (path === "" && type === "") return parseName;
+      if (path !== "" && type === "") return path + "/" + parseName;
+      if (path === "" && type !== "") return type + "/" + parseName;
+      return path + "/" + type + "/" + parseName;
     };
 
     this.generateName = function() {
@@ -83,7 +83,7 @@ module.exports = class extends Generator {
 
       if (this.options.name.split("/").length > 1) {
         let tempName = this.options.name.split("/");
-        this.getName = tempName[1];
+        this.getName = tempName[tempName.length - 1];
         return this.getName;
       }
     };
@@ -179,6 +179,7 @@ module.exports = class extends Generator {
       );
       this.composeWith("wow-react:story", {
         arguments: [this.name, this.destinationPath()],
+        storybook: this.storybook,
         storypath: `${this.storypath}`
       });
     }

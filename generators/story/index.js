@@ -2,7 +2,6 @@
 
 const path = require('path');
 const Generator = require("yeoman-generator");
-const yosay = require("yosay");
 const { pascalize, decamelize } = require("@v-lab/xcase");
 const { replaceNonWordCharacters, toPosixPath } = require("../../utils/wow-helper");
 
@@ -33,13 +32,6 @@ module.exports = class extends Generator {
       type: String,
       default: "",
       description: "Set your component's type"
-    });
-
-    this.option("storybook", {
-      type: Boolean,
-      default: this.config.get("generateStorybookComponent") ?? false,
-      description:
-        "Add a 'story' directory in the component folder with some boilerplate for @storybook/react"
     });
 
     this.option("storypath", {
@@ -79,7 +71,7 @@ module.exports = class extends Generator {
     this.type = this.options.type;
     this.project = this.options.project;
     this.helper = this.options.helper;
-    this.storybook = this.options.storybook;
+    this.storybook = true;
     this.storypath = this.options.storypath;
   }
 
