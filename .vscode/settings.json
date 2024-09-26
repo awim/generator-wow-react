@@ -1,0 +1,10 @@
+{
+  "files.eol": "\n",
+  "files.autoSave": "off",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always",
+    "source.removeUnusedImports": "always",
+    "source.organizeImports": "always"
+  }
+}

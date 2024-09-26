@@ -41,7 +41,9 @@
   },
   "scripts": {
     "test": "mocha __tests__/*",
-    "pretest": "eslint ."
+    "pretest": "eslint .",
+    "prettier:check": "prettier --check \"{,generators/**/}*.{md,json,yml,html,cjs,mjs,js,ts,tsx,css,scss}\"",
+    "prettier:format": "prettier --write \"{,generators/**/}*.{md,json,yml,html,cjs,mjs,js,ts,tsx,css,scss}\""
   },
   "repository": {
     "type": "git",
